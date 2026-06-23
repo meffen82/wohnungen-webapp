@@ -1,0 +1,24 @@
+services:
+  wohnungen-webapp:
+    build: ./webapp
+    image: wohnungen-webapp:latest
+    container_name: wohnungen-webapp
+    restart: unless-stopped
+    user: "1001:1001"
+    ports:
+      - "127.0.0.1:8765:8765"
+    environment:
+      - WOHNUNGEN_SECRET=${WOHNUNGEN_SECRET}
+      - PYTHONDONTWRITEBYTECODE=1
+    volumes:
+      - ${HERMES_DATA_PATH}:/data:ro
+      - ${OVERLAY_DATA_PATH}:/overlay
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 100
+    mem_limit: 256m

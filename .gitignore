@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+
+# Node
+node_modules/
+frontend/dist/
+
+# Laufzeit-Daten (lokal, nicht im Repo)
+data/
+state/
+cron-logs/
+
+# Secrets
+.env
+
+# Lokale Entwicklungs-Versuche (nicht für Repo)
+backend/
+frontend/
+
+# App-Daten (persönliche Favoriten/Notizen)
+webapp/overlay-data/
+webapp/__pycache__/
+
+# Archiv / Dokumentation (lokal)
+scripts/
+apartment-search-skill/
+admin/
+wohnungssuche-job-analyse.md

@@ -1,0 +1,15 @@
+[Unit]
+Description=Wohnungssuche Web App
+After=network.target docker.service
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/projects/wohnungssuche-app/webapp
+EnvironmentFile=/home/ubuntu/projects/wohnungssuche-app/webapp/.env
+ExecStart=/usr/bin/python3 -m uvicorn main:app --host 127.0.0.1 --port 8765 --workers 1
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

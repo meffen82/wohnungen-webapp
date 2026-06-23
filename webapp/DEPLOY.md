@@ -6,7 +6,7 @@ hält Favoriten/Notizen/Hidden in einer eigenen `overlay-data/overlay.json`.
 ## Build & Run
 
 ```bash
-cd /home/ubuntu/projects/wohnungssuche-app/webapp
+cd webapp
 
 docker build -t wohnungen-webapp:latest .
 
@@ -18,8 +18,8 @@ docker run -d --name wohnungen-webapp \
   -p 127.0.0.1:8765:8765 \
   -e WOHNUNGEN_SECRET=<SECRET> \
   -e PYTHONDONTWRITEBYTECODE=1 \
-  -v /.hermes/data:/data:ro \
-  -v /home/ubuntu/projects/wohnungssuche-app/webapp/overlay-data:/overlay \
+  -v /pfad/zu/hermes/data:/data:ro \
+  -v /pfad/zu/overlay-data:/overlay \
   --read-only --tmpfs /tmp \
   --cap-drop ALL \
   --security-opt no-new-privileges \
@@ -39,7 +39,7 @@ docker run -d --name wohnungen-webapp \
 
 ## Zugriff
 
-`https://host2.magrue.de/<SECRET>/` — der Secret-Token in der URL ist die Auth.
+`https://$APP_URL/<SECRET>/` — der Secret-Token in der URL ist die Auth.
 nginx (Host) proxyt nach `127.0.0.1:8765`, `access_log off` + `Referrer-Policy no-referrer`
 im location-Block (Token-Leak-Schutz).
 
@@ -47,6 +47,5 @@ im location-Block (Token-Leak-Schutz).
 
 1. Neuen Token: `python3 -c "import secrets; print(secrets.token_urlsafe(24))"`
 2. Container mit neuem `WOHNUNGEN_SECRET` neu starten (siehe Run oben).
-3. nginx-`location`-Pfad in `/etc/nginx/sites-available/host2.magrue.de` auf den
-   neuen Token ändern, `sudo nginx -t && sudo systemctl reload nginx`.
+3. nginx-`location`-Pfad auf den neuen Token ändern, `sudo nginx -t && sudo systemctl reload nginx`.
 4. Neuen Link neu bookmarken/teilen.

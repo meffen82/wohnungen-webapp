@@ -26,7 +26,7 @@ Hermes-Agent  →  apartment_state.json  (read-only mount)
                         ↓
                    nginx (Host)
                         ↓
-           https://host2.magrue.de/<TOKEN>/
+           https://<APP_URL>/<TOKEN>/
 ```
 
 Die App schreibt **nie** in die Hermes-Daten. Favoriten, Notizen und Hidden-Flags werden in einer eigenen `overlay.json` gespeichert.

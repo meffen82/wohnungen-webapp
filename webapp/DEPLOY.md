@@ -1,7 +1,7 @@
 # Wohnungssuche Web-App — Deploy
 
 Eigener Docker-Container, isoliert von Hermes. Liest die Wohnungsdaten read-only,
-hält Favoriten/Notizen/Hidden in einer eigenen `overlay-data/overlay.json`.
+hält Favoriten/Notizen/Hidden in einem eigenen Docker-Volume (`overlay-data`).
 
 ## Build & Run
 
@@ -19,7 +19,7 @@ docker run -d --name wohnungen-webapp \
   -e WOHNUNGEN_SECRET=<SECRET> \
   -e PYTHONDONTWRITEBYTECODE=1 \
   -v /pfad/zu/hermes/data:/data:ro \
-  -v /pfad/zu/overlay-data:/overlay \
+  -v overlay-data:/overlay \
   --read-only --tmpfs /tmp \
   --cap-drop ALL \
   --security-opt no-new-privileges \
@@ -35,7 +35,7 @@ docker run -d --name wohnungen-webapp \
   Die App kann den Host oder andere Container nicht erreichen.
 - **Gehärtet**: `--read-only` rootfs, `--cap-drop ALL`, `no-new-privileges`,
   pids/memory-Limits, läuft als unprivilegierte uid 1001.
-- **Eigene Daten**: nur `overlay-data/` ist beschreibbar (Favoriten/Notizen/Hidden).
+- **Eigene Daten**: nur das `overlay-data` Volume ist beschreibbar (Favoriten/Notizen/Hidden).
 
 ## Zugriff
 

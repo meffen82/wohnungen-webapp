@@ -45,7 +45,7 @@ docker run -d --name wohnungen-webapp \
   -p 127.0.0.1:8765:8765 \
   -e WOHNUNGEN_SECRET=<TOKEN> \
   -v /.hermes/data:/data:ro \
-  -v /pfad/zu/overlay-data:/overlay \
+  -v overlay-data:/overlay \
   --read-only --tmpfs /tmp \
   --cap-drop ALL --security-opt no-new-privileges \
   wohnungen-webapp:latest

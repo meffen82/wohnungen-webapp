@@ -12,7 +12,7 @@ services:
       - PYTHONDONTWRITEBYTECODE=1
     volumes:
       - ${HERMES_DATA_PATH}:/data:ro
-      - ${OVERLAY_DATA_PATH}:/overlay
+      - overlay-data:/overlay
     read_only: true
     tmpfs:
       - /tmp
@@ -22,3 +22,6 @@ services:
       - no-new-privileges:true
     pids_limit: 100
     mem_limit: 256m
+
+volumes:
+  overlay-data:

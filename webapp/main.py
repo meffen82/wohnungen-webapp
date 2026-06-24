@@ -179,6 +179,8 @@ def amenity_tags(apt: dict) -> str:
 def _has_digit(s: str) -> bool:
     return any(c.isdigit() for c in (s or ""))
 
+_ZERO_SENTINEL = re.compile(r'^\s*0\s*(KM|NK|WM|QM)\s*$', re.IGNORECASE)
+
 
 def cost_info(apt: dict, info: str) -> tuple[str, list[str]]:
     """Collect all cost components from BOTH the structured fields and the info
@@ -189,17 +191,17 @@ def cost_info(apt: dict, info: str) -> tuple[str, list[str]]:
     """
     comp: dict[str, str] = {}
 
-    # 1) structured fields take precedence
+    # 1) structured fields take precedence; skip "0 KM" / "0 WM" etc. sentinels
     for field, label in (("warmmiete", "WM"), ("kaltmiete", "KM"),
                           ("nebenkosten", "NK"), ("qm_preis", "€/m²")):
         v = (apt.get(field) or "").strip()
-        if _has_digit(v):
+        if _has_digit(v) and not _ZERO_SENTINEL.match(v):
             comp[label] = v.replace("QM", "€/m²").replace("qm", "€/m²").strip()
 
     # 2) fill gaps from the info string tokens
     for part in info.split("|"):
         p = part.strip()
-        if not _has_digit(p):
+        if not _has_digit(p) or _ZERO_SENTINEL.match(p):
             continue
         up = p.upper()
         if "KM" in up:

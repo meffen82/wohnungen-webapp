@@ -310,7 +310,7 @@ def render_card(apt_id: str, apt: dict, url: str, ov: dict, is_new: bool = False
   </div>
   <div class="card-title">{esc(apt.get("title", ""))}</div>
   {f'<div class="size">{esc(size)}</div>' if size else ""}
-  {f'<div class="price">💶 {esc(headline)}</div>' if headline else ""}
+  <div class="price{'' if headline else ' price-na'}">💶 {esc(headline) if headline else "k.A."}</div>
   {f'<div class="cost-detail">{esc(" · ".join(breakdown))}</div>' if breakdown else ""}
   {f'<div class="amenities">{amenities}</div>' if amenities else ""}
   {fav_sub}{note_html}
@@ -468,6 +468,7 @@ body{{padding:0 0 env(safe-area-inset-bottom) 0;min-height:100vh;max-width:100%;
 .card-title{{font-size:15px;font-weight:600;color:#f0f6fc;margin-bottom:5px;line-height:1.3;overflow-wrap:anywhere}}
 .size{{font-size:13px;color:var(--muted);margin-bottom:4px}}
 .price{{font-size:15px;font-weight:600;color:var(--green);margin-bottom:3px}}
+.price-na{{color:var(--muted);font-weight:400}}
 .cost-detail{{font-size:12px;color:var(--muted);margin-bottom:6px;overflow-wrap:anywhere}}
 .amenities{{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px;min-width:0}}
 .tag{{font-size:11px;padding:2px 6px;border-radius:4px;white-space:nowrap}}

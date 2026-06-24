@@ -591,7 +591,7 @@ async function toggleFav(evt, aptId) {{
       card.classList.toggle('fav');
       card.dataset.fav = isFav ? '0' : '1';
       showToast(isFav ? '💔 Favorit entfernt' : '⭐ Als Favorit gespeichert');
-      if (card.classList.contains('gone-card')) setTimeout(() => location.reload(), 600);
+      setTimeout(() => location.reload(), 600);
     }} else showToast('❌ ' + (data.error||'Fehler'), false);
   }} catch(e) {{ showToast('❌ Verbindungsfehler', false); }}
   finally {{ btn.classList.remove('loading'); }}
